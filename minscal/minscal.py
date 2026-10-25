@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# evercal — локальный календарь с событиями в стиле waycal.
+# minscal — локальный календарь с событиями в стиле waycal.
 # Цвета берёт из системной темы (~/.config/hypr/theme/current.css,
 # её переключает theme/scripts/switch.sh) и перекрашивается вживую.
 
@@ -17,16 +17,14 @@ import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Gdk", "4.0")
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "common"))
-from evertheme import Theme  # noqa: E402
+from minstheme import Theme  # noqa: E402
 from gi.repository import Gdk, GLib, Gtk  # noqa: E402
 
-APP_ID = "dev.natsu.evercal"
+APP_ID = "dev.natsu.minscal"
 HERE = Path(__file__).resolve().parent
 STYLE_CSS = HERE / "style.css"
-THEME_CSS = Path(os.environ.get(
-    "EVERCAL_THEME", Path.home() / ".config/hypr/theme/current.css"))
-DATA_FILE = Path(GLib.get_user_data_dir()) / "evercal" / "events.json"
-SETTINGS_FILE = Path(GLib.get_user_config_dir()) / "evercal" / "settings.json"
+DATA_FILE = Path(GLib.get_user_data_dir()) / "minscal" / "events.json"
+SETTINGS_FILE = Path(GLib.get_user_config_dir()) / "minscal" / "settings.json"
 
 MONTHS = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
           "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"]
@@ -57,7 +55,7 @@ def read_json(path, default):
     except (json.JSONDecodeError, OSError) as e:
         # Битый файл не перезаписываем молча — откладываем в сторону.
         backup = path.with_name(f"{path.name}.broken-{int(time.time())}")
-        print(f"evercal: {path}: {e}; сохранён как {backup}", file=sys.stderr)
+        print(f"minscal: {path}: {e}; сохранён как {backup}", file=sys.stderr)
         try:
             path.rename(backup)
         except OSError:
@@ -337,12 +335,12 @@ class EventForm(Gtk.Box):
 
 class Window(Gtk.ApplicationWindow):
     def __init__(self, app):
-        super().__init__(application=app, title="evercal",
+        super().__init__(application=app, title="minscal",
                          default_width=760, default_height=440)
         # Hyprland не даёт серверных декораций — без этого GTK нарисует свой
         # заголовок с кнопками, который выбивается из стиля.
         self.set_decorated(False)
-        self.add_css_class("evercal")
+        self.add_css_class("minscal")
 
         self.store = Store(DATA_FILE)
         self.settings = read_json(SETTINGS_FILE, {})
@@ -764,7 +762,7 @@ class App(Gtk.Application):
 
     def do_activate(self):
         if self.theme is None:
-            self.theme = Theme("evercal", STYLE_CSS, THEME_CSS)
+            self.theme = Theme("minscal", STYLE_CSS)
         win = self.get_active_window() or Window(self)
         win.present()
 

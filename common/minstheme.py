@@ -1,8 +1,11 @@
-# Общая тема для ever*-приложений (evercal, everplay, everclock).
-# CssProvider = запасная палитра + @import current.css + style.css приложения.
-# Следит за каталогом темы и перезагружается при смене симлинка, так что
-# окна перекрашиваются сразу после theme/scripts/switch.sh.
+# Общая тема для mins*-приложений.
+# CssProvider = запасная палитра + @import файла палитры + style.css приложения.
+# Следит за каталогом палитры и перезагружается при её смене (в том числе
+# при подмене симлинка), так что окна перекрашиваются сразу.
+#
+# Файл палитры — $MINS_THEME, по умолчанию ~/.config/hypr/theme/current.css.
 
+import os
 import sys
 from pathlib import Path
 
@@ -12,7 +15,8 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Gdk", "4.0")
 from gi.repository import Gdk, Gio, GLib, Gtk  # noqa: E402
 
-DEFAULT_THEME_CSS = Path.home() / ".config/hypr/theme/current.css"
+DEFAULT_THEME_CSS = Path(os.environ.get(
+    "MINS_THEME", Path.home() / ".config/hypr/theme/current.css"))
 
 # Палитра по умолчанию — на случай, если current.css отсутствует.
 # Стоит до @import, так что переменные темы её перекрывают.

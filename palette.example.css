@@ -1,0 +1,18 @@
+/* Пример палитры для mins*-приложений (Gruvbox Dark).
+   Скопируйте в ~/.config/hypr/theme/current.css (или в любое место и укажите
+   путь в MINS_THEME) и меняйте цвета — открытые окна перекрасятся сразу.
+   Цвета можно задавать как #rrggbb или rgba(r, g, b, a); полупрозрачный bg
+   даёт «стеклянные» окна, если в композиторе включён блюр. */
+
+@define-color bg #282828;
+@define-color bg-alt #32302f;
+@define-color fg #ebdbb2;
+@define-color fg-alt #a89984;
+@define-color accent #fe8019;
+@define-color red #fb4934;
+@define-color green #b8bb26;
+@define-color yellow #fabd2f;
+@define-color blue #83a598;
+@define-color purple #d3869b;
+@define-color cyan #8ec07c;
+@define-color border #504945;

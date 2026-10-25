@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# everclock — часы в стиле evercal/everplay: крупное время, дата и тонкая
+# minsclock — часы в стиле minscal/minsplay: крупное время, дата и тонкая
 # линия минуты. Цвета берёт из системной темы (~/.config/hypr/theme/current.css)
 # и перекрашивается вживую.
 
@@ -14,15 +14,13 @@ import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Gdk", "4.0")
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "common"))
-from evertheme import Theme  # noqa: E402
+from minstheme import Theme  # noqa: E402
 from gi.repository import Gdk, GLib, Gtk  # noqa: E402
 
-APP_ID = "dev.natsu.everclock"
+APP_ID = "dev.natsu.minsclock"
 HERE = Path(__file__).resolve().parent
 STYLE_CSS = HERE / "style.css"
-THEME_CSS = Path(os.environ.get(
-    "EVERCLOCK_THEME", Path.home() / ".config/hypr/theme/current.css"))
-SETTINGS_FILE = Path(GLib.get_user_config_dir()) / "everclock" / "settings.json"
+SETTINGS_FILE = Path(GLib.get_user_config_dir()) / "minsclock" / "settings.json"
 # классы размера окна для адаптивного CSS: (мин. ширина, мин. высота, класс)
 SIZES = [(820, 360, "size-l"), (520, 220, "size-m"), (0, 0, "size-s")]
 
@@ -48,12 +46,12 @@ def write_settings(data):
 
 class Window(Gtk.ApplicationWindow):
     def __init__(self, app):
-        super().__init__(application=app, title="everclock",
+        super().__init__(application=app, title="minsclock",
                          default_width=340, default_height=150)
         # Hyprland не даёт серверных декораций — без этого GTK нарисует свой
         # заголовок с кнопками, который выбивается из стиля.
         self.set_decorated(False)
-        self.add_css_class("everclock")
+        self.add_css_class("minsclock")
 
         self.settings = read_settings()
         self.size_class = None
@@ -148,7 +146,7 @@ class App(Gtk.Application):
 
     def do_activate(self):
         if self.theme is None:
-            self.theme = Theme("everclock", STYLE_CSS, THEME_CSS)
+            self.theme = Theme("minsclock", STYLE_CSS)
         # повторный запуск закрывает окно — удобно вешать на клик в waybar
         win = self.get_active_window()
         if win:

@@ -1,8 +1,8 @@
-/* evercal — используются только переменные системной палитры:
+/* minscal — используются только переменные системной палитры:
    @bg, @bg-alt, @fg, @fg-alt, @accent, @red/green/yellow/blue/purple/cyan, @border
-   (их задаёт ~/.config/hypr/theme/current.css, подключается из evercal.py). */
+   (их задаёт ~/.config/hypr/theme/current.css, подключается из minscal.py). */
 
-window.evercal {
+window.minscal {
     background-color: @bg;
     color: @fg;
     font-family: "JetBrains Mono", "FiraCode Nerd Font Mono", monospace;
@@ -264,23 +264,23 @@ label.error {
 
 /* --- стили углов: переключаются клавишей s --- */
 
-window.evercal.rounded button,
-window.evercal.rounded entry,
-window.evercal.rounded .note,
-window.evercal.rounded list.events > row { border-radius: 6px; }
-window.evercal.rounded checkbutton check { border-radius: 4px; }
-window.evercal.rounded button.swatch,
-window.evercal.rounded .mini-dot { border-radius: 99px; }
+window.minscal.rounded button,
+window.minscal.rounded entry,
+window.minscal.rounded .note,
+window.minscal.rounded list.events > row { border-radius: 6px; }
+window.minscal.rounded checkbutton check { border-radius: 4px; }
+window.minscal.rounded button.swatch,
+window.minscal.rounded .mini-dot { border-radius: 99px; }
 
-window.evercal.sharp button,
-window.evercal.sharp entry,
-window.evercal.sharp .note,
-window.evercal.sharp list.events > row,
-window.evercal.sharp checkbutton check,
-window.evercal.sharp button.swatch,
-window.evercal.sharp .mini-dot { border-radius: 0; }
-window.evercal.sharp button.day.selected,
-window.evercal.sharp button.pick.selected { box-shadow: inset 0 0 0 1px @accent; }
+window.minscal.sharp button,
+window.minscal.sharp entry,
+window.minscal.sharp .note,
+window.minscal.sharp list.events > row,
+window.minscal.sharp checkbutton check,
+window.minscal.sharp button.swatch,
+window.minscal.sharp .mini-dot { border-radius: 0; }
+window.minscal.sharp button.day.selected,
+window.minscal.sharp button.pick.selected { box-shadow: inset 0 0 0 1px @accent; }
 
 /* --- выбор времени --- */
 
@@ -335,9 +335,9 @@ separator.tp-sep {
     margin: 8px 4px 4px;
 }
 
-window.evercal.rounded popover.time-popover > contents { border-radius: 10px; }
-window.evercal.rounded button.time-field,
-window.evercal.rounded button.tp { border-radius: 6px; }
-window.evercal.sharp popover.time-popover > contents,
-window.evercal.sharp button.time-field,
-window.evercal.sharp button.tp { border-radius: 0; }
+window.minscal.rounded popover.time-popover > contents { border-radius: 10px; }
+window.minscal.rounded button.time-field,
+window.minscal.rounded button.tp { border-radius: 6px; }
+window.minscal.sharp popover.time-popover > contents,
+window.minscal.sharp button.time-field,
+window.minscal.sharp button.tp { border-radius: 0; }

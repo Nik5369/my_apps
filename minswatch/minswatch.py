@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# everwatch — секундомер в стиле evercal/everplay/everclock.
+# minswatch — секундомер в стиле minscal/minsplay/minsclock.
 # Делит состояние с waybar-модулем custom/stopwatch
 # (~/.config/waybar/scripts/stopwatch.sh): тот же файл
 # $XDG_RUNTIME_DIR/waybar-stopwatch.state в формате "RUNNING ACCUM START"
@@ -15,16 +15,14 @@ import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Gdk", "4.0")
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "common"))
-from evertheme import Theme  # noqa: E402
+from minstheme import Theme  # noqa: E402
 from gi.repository import Gdk, Gio, GLib, Gtk  # noqa: E402
 
-APP_ID = "dev.natsu.everwatch"
+APP_ID = "dev.natsu.minswatch"
 HERE = Path(__file__).resolve().parent
 STYLE_CSS = HERE / "style.css"
-THEME_CSS = Path(os.environ.get(
-    "EVERWATCH_THEME", Path.home() / ".config/hypr/theme/current.css"))
 STATE_FILE = Path(os.environ.get(
-    "EVERWATCH_STATE",
+    "MINSWATCH_STATE",
     Path(os.environ.get("XDG_RUNTIME_DIR", "/tmp")) / "waybar-stopwatch.state"))
 WAYBAR_SIGNAL = 8  # должно совпадать с "signal" у custom/stopwatch в config.jsonc
 # классы размера окна для адаптивного CSS: (мин. ширина, мин. высота, класс)
@@ -82,12 +80,12 @@ class Stopwatch:
 
 class Window(Gtk.ApplicationWindow):
     def __init__(self, app):
-        super().__init__(application=app, title="everwatch",
+        super().__init__(application=app, title="minswatch",
                          default_width=360, default_height=170)
         # Hyprland не даёт серверных декораций — без этого GTK нарисует свой
         # заголовок с кнопками, который выбивается из стиля.
         self.set_decorated(False)
-        self.add_css_class("everwatch")
+        self.add_css_class("minswatch")
 
         self.watch = Stopwatch()
         self.size_class = None
@@ -121,7 +119,7 @@ class Window(Gtk.ApplicationWindow):
         controls.append(self.play_btn)
         root.append(controls)
 
-        # линия текущей минуты, как в everclock
+        # линия текущей минуты, как в minsclock
         self.minute_bar = Gtk.ProgressBar(css_classes=["position"])
         root.append(self.minute_bar)
 
@@ -212,7 +210,7 @@ class App(Gtk.Application):
 
     def do_activate(self):
         if self.theme is None:
-            self.theme = Theme("everwatch", STYLE_CSS, THEME_CSS)
+            self.theme = Theme("minswatch", STYLE_CSS)
         # повторный запуск закрывает окно — удобно вешать на клик в waybar
         win = self.get_active_window()
         if win:

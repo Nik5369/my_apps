@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-# everplay — мини-плеер в стиле evercal: трек, управление через MPRIS
+# minsplay — мини-плеер в стиле minscal: трек, управление через MPRIS
 # (playerctl), визуализатор на cava и громкость колесом мыши (wpctl).
 # Цвета берёт из системной темы (~/.config/hypr/theme/current.css)
 # и перекрашивается вживую.
 
-import os
 import re
 import sys
 from pathlib import Path
@@ -15,15 +14,13 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Gdk", "4.0")
 gi.require_version("Playerctl", "2.0")
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "common"))
-from evertheme import Theme  # noqa: E402
+from minstheme import Theme  # noqa: E402
 from gi.repository import Gdk, Gio, GLib, Gtk, Pango, Playerctl  # noqa: E402
 
-APP_ID = "dev.natsu.everplay"
+APP_ID = "dev.natsu.minsplay"
 HERE = Path(__file__).resolve().parent
 STYLE_CSS = HERE / "style.css"
 CAVA_CONF = HERE / "cava.conf"
-THEME_CSS = Path(os.environ.get(
-    "EVERPLAY_THEME", Path.home() / ".config/hypr/theme/current.css"))
 SINK = "@DEFAULT_AUDIO_SINK@"
 VOLUME_STEP = 5   # % за один щелчок колеса
 VOLUME_MAX = 1.5  # wpctl -l: потолок 150%, всё выше 100% подсвечивается
@@ -47,7 +44,7 @@ class Cava:
                 ["cava", "-p", str(CAVA_CONF)],
                 Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_SILENCE)
         except GLib.Error as e:
-            print(f"everplay: cava не запустилась: {e.message}", file=sys.stderr)
+            print(f"minsplay: cava не запустилась: {e.message}", file=sys.stderr)
             return
         self.stream = Gio.DataInputStream.new(self.proc.get_stdout_pipe())
         self.cancel = Gio.Cancellable()
@@ -92,7 +89,7 @@ class Volume:
                                       Gio.SubprocessFlags.STDOUT_PIPE
                                       | Gio.SubprocessFlags.STDERR_SILENCE)
         except GLib.Error as e:
-            print(f"everplay: wpctl: {e.message}", file=sys.stderr)
+            print(f"minsplay: wpctl: {e.message}", file=sys.stderr)
             return
         proc.communicate_utf8_async(None, None, self._done, then)
 
@@ -142,7 +139,7 @@ class Players:
         try:
             player = Playerctl.Player.new_from_name(name)
         except GLib.Error as e:
-            print(f"everplay: {name.name}: {e.message}", file=sys.stderr)
+            print(f"minsplay: {name.name}: {e.message}", file=sys.stderr)
             return
         player.connect("playback-status", lambda *_: self.on_change())
         player.connect("metadata", lambda *_: self.on_change())
@@ -165,17 +162,17 @@ def call(player, method):
         try:
             getattr(player, method)()
         except GLib.Error as e:
-            print(f"everplay: {method}: {e.message}", file=sys.stderr)
+            print(f"minsplay: {method}: {e.message}", file=sys.stderr)
 
 
 class Window(Gtk.ApplicationWindow):
     def __init__(self, app):
-        super().__init__(application=app, title="everplay",
+        super().__init__(application=app, title="minsplay",
                          default_width=420, default_height=140)
         # Hyprland не даёт серверных декораций — без этого GTK нарисует свой
         # заголовок с кнопками, который выбивается из стиля.
         self.set_decorated(False)
-        self.add_css_class("everplay")
+        self.add_css_class("minsplay")
 
         self.bars = [0.0] * BARS
 
@@ -347,7 +344,7 @@ class App(Gtk.Application):
 
     def do_activate(self):
         if self.theme is None:
-            self.theme = Theme("everplay", STYLE_CSS, THEME_CSS)
+            self.theme = Theme("minsplay", STYLE_CSS)
         # повторный запуск закрывает окно — удобно вешать на клик в waybar
         win = self.get_active_window()
         if win:

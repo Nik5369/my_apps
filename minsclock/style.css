@@ -1,0 +1,78 @@
+/* minsclock — используются только переменные системной палитры:
+   @bg, @fg, @fg-alt, @accent
+   (их задаёт ~/.config/hypr/theme/current.css, подключается из minsclock.py). */
+
+window.minsclock {
+    background-color: @bg;
+    color: @fg;
+    font-family: "JetBrains Mono", "FiraCode Nerd Font Mono", monospace;
+    font-size: 13px;
+}
+
+.content {
+    padding: 14px 16px 10px;
+}
+
+label.digits {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+label.colon {
+    color: @accent;
+    margin: 0 2px;
+    transition: opacity 200ms;
+}
+
+label.colon.off {
+    opacity: 0.25;
+}
+
+label.seconds {
+    color: @fg-alt;
+    font-size: 18px;
+    margin-left: 6px;
+}
+
+label.date {
+    color: @fg-alt;
+    margin-top: 2px;
+}
+
+/* --- линия минуты: тонкая полоска внизу, как позиция трека в minsplay --- */
+
+progressbar.position {
+    margin-top: 8px;
+}
+
+progressbar.position trough {
+    background-color: alpha(@fg, 0.08);
+    border: none;
+    min-height: 2px;
+    border-radius: 0;
+}
+
+progressbar.position progress {
+    background-color: @accent;
+    border: none;
+    min-height: 2px;
+    border-radius: 0;
+}
+
+/* --- адаптив: класс размера ставит minsclock.py по размеру окна --- */
+
+window.minsclock.size-m .content { padding: 20px 24px 14px; }
+window.minsclock.size-m label.digits { font-size: 84px; }
+window.minsclock.size-m label.seconds { font-size: 28px; margin-left: 10px; }
+window.minsclock.size-m label.date { font-size: 16px; margin-top: 4px; }
+window.minsclock.size-m progressbar.position trough,
+window.minsclock.size-m progressbar.position progress { min-height: 3px; }
+
+window.minsclock.size-l .content { padding: 32px 40px 22px; }
+window.minsclock.size-l label.digits { font-size: 150px; }
+window.minsclock.size-l label.colon { margin: 0 6px; }
+window.minsclock.size-l label.seconds { font-size: 44px; margin-left: 16px; }
+window.minsclock.size-l label.date { font-size: 22px; margin-top: 6px; }
+window.minsclock.size-l progressbar.position { margin-top: 14px; }
+window.minsclock.size-l progressbar.position trough,
+window.minsclock.size-l progressbar.position progress { min-height: 4px; }

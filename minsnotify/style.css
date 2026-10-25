@@ -1,8 +1,8 @@
-/* evernotify — используются только переменные системной палитры:
+/* minsnotify — используются только переменные системной палитры:
    @bg, @bg-alt, @fg, @fg-alt, @accent, @red, @border
-   (их задаёт ~/.config/hypr/theme/current.css, подключается из evernotify.py). */
+   (их задаёт ~/.config/hypr/theme/current.css, подключается из minsnotify.py). */
 
-window.evernotify {
+window.minsnotify {
     background-color: @bg;
     color: @fg;
     font-family: "JetBrains Mono", "FiraCode Nerd Font Mono", monospace;
@@ -10,7 +10,7 @@ window.evernotify {
 }
 
 /* окно всплывашек прозрачное — видны только карточки */
-window.evernotify-popups {
+window.minsnotify-popups {
     background: none;
     font-family: "JetBrains Mono", "FiraCode Nerd Font Mono", monospace;
     font-size: 13px;
@@ -62,7 +62,7 @@ button.text-btn.accent {
     background-color: alpha(@fg, 0.04);
 }
 
-window.evernotify-popups .card {
+window.minsnotify-popups .card {
     background-color: @bg;
     border: 1px solid alpha(@border, 0.8);
     min-width: 340px;
@@ -130,7 +130,7 @@ button.action:hover {
     color: @fg;
 }
 
-/* --- таймер всплывашки: тонкая линия, как позиция трека в everplay --- */
+/* --- таймер всплывашки: тонкая линия, как позиция трека в minsplay --- */
 
 progressbar.position {
     margin-top: 8px;
@@ -150,15 +150,15 @@ progressbar.position progress {
     border-radius: 0;
 }
 
-/* --- адаптив окна истории: класс размера ставит evernotify.py --- */
+/* --- адаптив окна истории: класс размера ставит minsnotify.py --- */
 
-window.evernotify.size-m .content { padding: 20px 24px; }
-window.evernotify.size-m label.title { font-size: 16px; }
-window.evernotify.size-m image.note-image { -gtk-icon-size: 44px; }
-window.evernotify.size-m .card { padding: 14px 16px 12px; }
+window.minsnotify.size-m .content { padding: 20px 24px; }
+window.minsnotify.size-m label.title { font-size: 16px; }
+window.minsnotify.size-m image.note-image { -gtk-icon-size: 44px; }
+window.minsnotify.size-m .card { padding: 14px 16px 12px; }
 
-window.evernotify.size-l .content { padding: 32px 40px; }
-window.evernotify.size-l label.title { font-size: 20px; }
-window.evernotify.size-l image.note-image { -gtk-icon-size: 56px; }
-window.evernotify.size-l label.summary { font-size: 15px; }
-window.evernotify.size-l .card { padding: 16px 20px 14px; }
+window.minsnotify.size-l .content { padding: 32px 40px; }
+window.minsnotify.size-l label.title { font-size: 20px; }
+window.minsnotify.size-l image.note-image { -gtk-icon-size: 56px; }
+window.minsnotify.size-l label.summary { font-size: 15px; }
+window.minsnotify.size-l .card { padding: 16px 20px 14px; }

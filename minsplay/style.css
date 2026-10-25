@@ -1,8 +1,8 @@
-/* everplay — используются только переменные системной палитры:
+/* minsplay — используются только переменные системной палитры:
    @bg, @bg-alt, @fg, @fg-alt, @accent, @red, @border
-   (их задаёт ~/.config/hypr/theme/current.css, подключается из everplay.py). */
+   (их задаёт ~/.config/hypr/theme/current.css, подключается из minsplay.py). */
 
-window.everplay {
+window.minsplay {
     background-color: @bg;
     color: @fg;
     font-family: "JetBrains Mono", "FiraCode Nerd Font Mono", monospace;
@@ -28,7 +28,7 @@ label.artist {
     margin-top: 2px;
 }
 
-window.everplay.idle label.track {
+window.minsplay.idle label.track {
     color: @fg-alt;
     font-weight: normal;
 }
@@ -109,26 +109,26 @@ button.volume.boost {
     color: @yellow;
 }
 
-/* --- адаптив: класс размера ставит everplay.py по размеру окна --- */
+/* --- адаптив: класс размера ставит minsplay.py по размеру окна --- */
 
-window.everplay.size-m .content { padding: 20px 24px 14px; }
-window.everplay.size-m label.track { font-size: 20px; }
-window.everplay.size-m label.artist { font-size: 15px; }
-window.everplay.size-m button.ctl { font-size: 24px; min-width: 40px; min-height: 36px; }
-window.everplay.size-m button.ctl.play { font-size: 30px; }
-window.everplay.size-m button.volume { font-size: 14px; }
-window.everplay.size-m label.source { font-size: 12px; }
-window.everplay.size-m progressbar.position trough,
-window.everplay.size-m progressbar.position progress { min-height: 3px; }
+window.minsplay.size-m .content { padding: 20px 24px 14px; }
+window.minsplay.size-m label.track { font-size: 20px; }
+window.minsplay.size-m label.artist { font-size: 15px; }
+window.minsplay.size-m button.ctl { font-size: 24px; min-width: 40px; min-height: 36px; }
+window.minsplay.size-m button.ctl.play { font-size: 30px; }
+window.minsplay.size-m button.volume { font-size: 14px; }
+window.minsplay.size-m label.source { font-size: 12px; }
+window.minsplay.size-m progressbar.position trough,
+window.minsplay.size-m progressbar.position progress { min-height: 3px; }
 
-window.everplay.size-l .content { padding: 32px 40px 22px; }
-window.everplay.size-l label.track { font-size: 30px; }
-window.everplay.size-l label.artist { font-size: 20px; margin-top: 6px; }
-window.everplay.size-l button.ctl { font-size: 32px; min-width: 56px; min-height: 48px; }
-window.everplay.size-l button.ctl.play { font-size: 42px; }
-window.everplay.size-l .controls { margin-bottom: 4px; }
-window.everplay.size-l button.volume { font-size: 16px; }
-window.everplay.size-l label.source { font-size: 14px; }
-window.everplay.size-l progressbar.position { margin-top: 14px; }
-window.everplay.size-l progressbar.position trough,
-window.everplay.size-l progressbar.position progress { min-height: 4px; }
+window.minsplay.size-l .content { padding: 32px 40px 22px; }
+window.minsplay.size-l label.track { font-size: 30px; }
+window.minsplay.size-l label.artist { font-size: 20px; margin-top: 6px; }
+window.minsplay.size-l button.ctl { font-size: 32px; min-width: 56px; min-height: 48px; }
+window.minsplay.size-l button.ctl.play { font-size: 42px; }
+window.minsplay.size-l .controls { margin-bottom: 4px; }
+window.minsplay.size-l button.volume { font-size: 16px; }
+window.minsplay.size-l label.source { font-size: 14px; }
+window.minsplay.size-l progressbar.position { margin-top: 14px; }
+window.minsplay.size-l progressbar.position trough,
+window.minsplay.size-l progressbar.position progress { min-height: 4px; }

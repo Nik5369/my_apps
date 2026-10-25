@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# evertray — системный трей в стиле evercal/everplay/everclock/everwatch.
+# minstray — системный трей в стиле minscal/minsplay/minsclock/minswatch.
 # StatusNotifierHost: берёт иконки у org.kde.StatusNotifierWatcher (его держит
 # kded6 или waybar), меню рисует сам через com.canonical.dbusmenu.
 # Цвета берёт из системной темы (~/.config/hypr/theme/current.css)
@@ -15,14 +15,12 @@ import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Gdk", "4.0")
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "common"))
-from evertheme import Theme  # noqa: E402
+from minstheme import Theme  # noqa: E402
 from gi.repository import Gdk, Gio, GLib, Gtk, Pango  # noqa: E402
 
-APP_ID = "dev.natsu.evertray"
+APP_ID = "dev.natsu.minstray"
 HERE = Path(__file__).resolve().parent
 STYLE_CSS = HERE / "style.css"
-THEME_CSS = Path(os.environ.get(
-    "EVERTRAY_THEME", Path.home() / ".config/hypr/theme/current.css"))
 # классы размера окна для адаптивного CSS: (мин. ширина, мин. высота, класс)
 SIZES = [(820, 360, "size-l"), (520, 220, "size-m"), (0, 0, "size-s")]
 
@@ -90,7 +88,7 @@ class TrayItem:
 
     def _on_props(self, out, err):
         if err:
-            print(f"evertray: {self.key}: {err.message}", file=sys.stderr)
+            print(f"minstray: {self.key}: {err.message}", file=sys.stderr)
             return
         self.props = out[0]
         self.on_change(self)
@@ -165,7 +163,7 @@ class Menu(Gtk.Popover):
 
     def _on_layout(self, out, err):
         if err:
-            print(f"evertray: меню {self.item.key}: {err.message}", file=sys.stderr)
+            print(f"minstray: меню {self.item.key}: {err.message}", file=sys.stderr)
             self.unparent()
             return
         _rev, root = out
@@ -301,12 +299,12 @@ class Tile(Gtk.FlowBoxChild):
 
 class Window(Gtk.ApplicationWindow):
     def __init__(self, app):
-        super().__init__(application=app, title="evertray",
+        super().__init__(application=app, title="minstray",
                          default_width=380, default_height=160)
         # Hyprland не даёт серверных декораций — без этого GTK нарисует свой
         # заголовок с кнопками, который выбивается из стиля.
         self.set_decorated(False)
-        self.add_css_class("evertray")
+        self.add_css_class("minstray")
         self.size_class = None
         self.items = {}   # key → TrayItem
         self.tiles = {}   # key → Tile
@@ -371,7 +369,7 @@ class Window(Gtk.ApplicationWindow):
     def _on_items(self, out, err):
         if err:
             self.empty.set_text("нет StatusNotifierWatcher")
-            print(f"evertray: {err.message}", file=sys.stderr)
+            print(f"minstray: {err.message}", file=sys.stderr)
             return
         for key in out[0]:
             self._add(key)
@@ -454,7 +452,7 @@ class App(Gtk.Application):
 
     def do_activate(self):
         if self.theme is None:
-            self.theme = Theme("evertray", STYLE_CSS, THEME_CSS)
+            self.theme = Theme("minstray", STYLE_CSS)
         # повторный запуск закрывает окно — удобно вешать на клик в waybar
         win = self.get_active_window()
         if win:

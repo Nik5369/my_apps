@@ -1,8 +1,8 @@
-/* evertray — используются только переменные системной палитры:
+/* minstray — используются только переменные системной палитры:
    @bg, @fg, @fg-alt, @accent, @border
-   (их задаёт ~/.config/hypr/theme/current.css, подключается из evertray.py). */
+   (их задаёт ~/.config/hypr/theme/current.css, подключается из minstray.py). */
 
-window.evertray {
+window.minstray {
     background-color: @bg;
     color: @fg;
     font-family: "JetBrains Mono", "FiraCode Nerd Font Mono", monospace;
@@ -119,16 +119,16 @@ separator.menu-sep {
     margin: 4px 6px;
 }
 
-/* --- адаптив: класс размера ставит evertray.py по размеру окна --- */
+/* --- адаптив: класс размера ставит minstray.py по размеру окна --- */
 
-window.evertray.size-m .content { padding: 20px 24px; }
-window.evertray.size-m label.title { font-size: 16px; }
-window.evertray.size-m image.tray-icon { -gtk-icon-size: 40px; }
-window.evertray.size-m label.name { font-size: 12px; }
-window.evertray.size-m flowboxchild.tile { padding: 12px 6px; }
+window.minstray.size-m .content { padding: 20px 24px; }
+window.minstray.size-m label.title { font-size: 16px; }
+window.minstray.size-m image.tray-icon { -gtk-icon-size: 40px; }
+window.minstray.size-m label.name { font-size: 12px; }
+window.minstray.size-m flowboxchild.tile { padding: 12px 6px; }
 
-window.evertray.size-l .content { padding: 32px 40px; }
-window.evertray.size-l label.title { font-size: 20px; }
-window.evertray.size-l image.tray-icon { -gtk-icon-size: 56px; }
-window.evertray.size-l label.name { font-size: 14px; }
-window.evertray.size-l flowboxchild.tile { padding: 16px 8px; border-radius: 12px; }
+window.minstray.size-l .content { padding: 32px 40px; }
+window.minstray.size-l label.title { font-size: 20px; }
+window.minstray.size-l image.tray-icon { -gtk-icon-size: 56px; }
+window.minstray.size-l label.name { font-size: 14px; }
+window.minstray.size-l flowboxchild.tile { padding: 16px 8px; border-radius: 12px; }

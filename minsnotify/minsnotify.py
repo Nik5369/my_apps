@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-# evernotify — демон уведомлений + окно истории в стиле остальных ever*-приложений.
+# minsnotify — демон уведомлений + окно истории в стиле остальных mins*-приложений.
 #
-#   evernotify --daemon   фоновый сервер org.freedesktop.Notifications:
+#   minsnotify --daemon   фоновый сервер org.freedesktop.Notifications:
 #                         всплывашки справа сверху (layer-shell) и история
-#   evernotify            открыть/закрыть окно истории (запустит демон,
+#   minsnotify            открыть/закрыть окно истории (запустит демон,
 #                         если он ещё не работает)
 #
 # Цвета берёт из системной темы (~/.config/hypr/theme/current.css)
@@ -14,8 +14,11 @@ import sys
 
 # gtk4-layer-shell должен загрузиться раньше libwayland-client, иначе
 # всплывашки не станут layer-поверхностями — перезапускаемся с LD_PRELOAD.
-_LAYER_LIB = "/usr/lib/libgtk4-layer-shell.so"
-if os.path.exists(_LAYER_LIB) and _LAYER_LIB not in os.environ.get("LD_PRELOAD", ""):
+# Ищем по имени, а не по пути: на разных дистрибутивах lib/lib64/multiarch.
+import ctypes.util  # noqa: E402
+
+_LAYER_LIB = ctypes.util.find_library("gtk4-layer-shell")
+if _LAYER_LIB and "gtk4-layer-shell" not in os.environ.get("LD_PRELOAD", ""):
     env = dict(os.environ, LD_PRELOAD=":".join(
         p for p in (_LAYER_LIB, os.environ.get("LD_PRELOAD")) if p))
     os.execve(sys.executable, [sys.executable, *sys.argv], env)
@@ -32,21 +35,19 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Gdk", "4.0")
 gi.require_version("Gtk4LayerShell", "1.0")
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "common"))
-from evertheme import Theme  # noqa: E402
+from minstheme import Theme  # noqa: E402
 from gi.repository import Gdk, Gio, GLib, Gtk, Gtk4LayerShell, Pango  # noqa: E402
 
 # переменные окружения — чтобы тестировать рядом с работающим демоном
-APP_ID = os.environ.get("EVERNOTIFY_APP_ID", "dev.natsu.evernotify")
-BUS_NAME = os.environ.get("EVERNOTIFY_BUS_NAME", "org.freedesktop.Notifications")
+APP_ID = os.environ.get("MINSNOTIFY_APP_ID", "dev.natsu.minsnotify")
+BUS_NAME = os.environ.get("MINSNOTIFY_BUS_NAME", "org.freedesktop.Notifications")
 HERE = Path(__file__).resolve().parent
 STYLE_CSS = HERE / "style.css"
-THEME_CSS = Path(os.environ.get(
-    "EVERNOTIFY_THEME", Path.home() / ".config/hypr/theme/current.css"))
 DATA_DIR = Path(os.environ.get(
-    "EVERNOTIFY_DATA", Path(GLib.get_user_data_dir()) / "evernotify"))
+    "MINSNOTIFY_DATA", Path(GLib.get_user_data_dir()) / "minsnotify"))
 HISTORY_FILE = DATA_DIR / "history.json"
 SETTINGS_FILE = DATA_DIR / "settings.json"
-IMAGE_DIR = Path(GLib.get_user_cache_dir()) / "evernotify"
+IMAGE_DIR = Path(GLib.get_user_cache_dir()) / "minsnotify"
 
 PATH = "/org/freedesktop/Notifications"
 IFACE = "org.freedesktop.Notifications"
@@ -309,10 +310,10 @@ class Popups:
     def _ensure_window(self):
         if self.window:
             return
-        win = Gtk.Window(css_classes=["evernotify-popups"], decorated=False,
+        win = Gtk.Window(css_classes=["minsnotify-popups"], decorated=False,
                          resizable=False)
         Gtk4LayerShell.init_for_window(win)
-        Gtk4LayerShell.set_namespace(win, "evernotify")
+        Gtk4LayerShell.set_namespace(win, "minsnotify")
         Gtk4LayerShell.set_layer(win, Gtk4LayerShell.Layer.OVERLAY)
         Gtk4LayerShell.set_keyboard_mode(win, Gtk4LayerShell.KeyboardMode.NONE)
         for edge, margin in ((Gtk4LayerShell.Edge.TOP, 12), (Gtk4LayerShell.Edge.RIGHT, 12)):
@@ -371,10 +372,10 @@ class Popups:
 
 class HistoryWindow(Gtk.ApplicationWindow):
     def __init__(self, app, server):
-        super().__init__(application=app, title="evernotify",
+        super().__init__(application=app, title="minsnotify",
                          default_width=420, default_height=520)
         self.set_decorated(False)
-        self.add_css_class("evernotify")
+        self.add_css_class("minsnotify")
         self.server = server
         self.size_class = None
 
@@ -489,8 +490,8 @@ class Server:
         # себя не даём, чтобы случайно поднятый swaync не перехватил уведомления
         self.owner_id = Gio.bus_own_name_on_connection(
             conn, BUS_NAME, Gio.BusNameOwnerFlags.REPLACE,
-            lambda *_: print(f"evernotify: владею {BUS_NAME}", file=sys.stderr),
-            lambda *_: print(f"evernotify: {BUS_NAME} занят другим демоном "
+            lambda *_: print(f"minsnotify: владею {BUS_NAME}", file=sys.stderr),
+            lambda *_: print(f"minsnotify: {BUS_NAME} занят другим демоном "
                              "(swaync?) — жду, пока освободится", file=sys.stderr))
 
     # --- D-Bus ---
@@ -500,7 +501,7 @@ class Server:
         try:
             self._dispatch(sender, method, params, invocation)
         except Exception as e:  # noqa: BLE001
-            print(f"evernotify: {method}: {e!r}", file=sys.stderr)
+            print(f"minsnotify: {method}: {e!r}", file=sys.stderr)
             invocation.return_dbus_error("org.freedesktop.DBus.Error.Failed", str(e))
 
     def _dispatch(self, sender, method, params, invocation):
@@ -510,7 +511,7 @@ class Server:
                  "icon-static", "persistence"],)))
         elif method == "GetServerInformation":
             invocation.return_value(GLib.Variant("(ssss)",
-                                                 ("evernotify", "natsu", "0.1", "1.2")))
+                                                 ("minsnotify", "natsu", "0.1", "1.2")))
         elif method == "Notify":
             nid = self.notify(sender, *params.unpack())
             invocation.return_value(GLib.Variant("(u)", (nid,)))
@@ -612,7 +613,7 @@ class App(Gtk.Application):
     def do_startup(self):
         Gtk.Application.do_startup(self)
         self.hold()  # демон живёт и без окон
-        self.theme = Theme("evernotify", STYLE_CSS, THEME_CSS)
+        self.theme = Theme("minsnotify", STYLE_CSS)
         self.server = Server(self.get_dbus_connection())
 
     def do_command_line(self, cmdline):
