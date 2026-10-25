@@ -1,0 +1,134 @@
+/* evertray — используются только переменные системной палитры:
+   @bg, @fg, @fg-alt, @accent, @border
+   (их задаёт ~/.config/hypr/theme/current.css, подключается из evertray.py). */
+
+window.evertray {
+    background-color: @bg;
+    color: @fg;
+    font-family: "JetBrains Mono", "FiraCode Nerd Font Mono", monospace;
+    font-size: 13px;
+}
+
+.content {
+    padding: 14px 16px;
+}
+
+label.title {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+label.dim {
+    color: @fg-alt;
+}
+
+/* --- плитки приложений --- */
+
+flowbox, flowboxchild {
+    background: none;
+}
+
+flowboxchild.tile {
+    padding: 8px 4px;
+    border-radius: 8px;
+    outline: none;
+    transition: background-color 100ms;
+}
+
+flowboxchild.tile:hover {
+    background-color: alpha(@fg, 0.06);
+}
+
+flowboxchild.tile:focus-visible {
+    box-shadow: inset 0 0 0 1px alpha(@accent, 0.7);
+}
+
+image.tray-icon {
+    -gtk-icon-size: 28px;
+}
+
+label.name {
+    color: @fg-alt;
+    font-size: 11px;
+}
+
+flowboxchild.tile:hover label.name {
+    color: @fg;
+}
+
+/* Passive — приложение просит не отвлекать: приглушаем */
+flowboxchild.tile.passive image.tray-icon {
+    opacity: 0.55;
+}
+
+/* NeedsAttention — подсвечиваем подпись и рамку акцентом */
+flowboxchild.tile.attention {
+    box-shadow: inset 0 -2px @accent;
+}
+
+flowboxchild.tile.attention label.name {
+    color: @accent;
+}
+
+/* --- меню приложения (dbusmenu) --- */
+
+popover.tray-menu > contents {
+    background-color: @bg;
+    color: @fg;
+    border: 1px solid alpha(@border, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 16px alpha(black, 0.35);
+    padding: 6px;
+    min-width: 200px;
+}
+
+popover.tray-menu button {
+    background: none;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    color: @fg;
+    padding: 5px 8px;
+    min-height: 0;
+    border-radius: 6px;
+    font-family: "JetBrains Mono", "FiraCode Nerd Font Mono", monospace;
+    font-size: 12px;
+}
+
+popover.tray-menu button:hover {
+    background-color: alpha(@accent, 0.14);
+    color: @fg;
+}
+
+popover.tray-menu button:disabled {
+    color: alpha(@fg-alt, 0.4);
+}
+
+popover.tray-menu button.menu-back {
+    color: @fg-alt;
+}
+
+label.menu-mark {
+    color: @accent;
+    min-width: 10px;
+}
+
+separator.menu-sep {
+    background-color: alpha(@border, 0.6);
+    min-height: 1px;
+    margin: 4px 6px;
+}
+
+/* --- адаптив: класс размера ставит evertray.py по размеру окна --- */
+
+window.evertray.size-m .content { padding: 20px 24px; }
+window.evertray.size-m label.title { font-size: 16px; }
+window.evertray.size-m image.tray-icon { -gtk-icon-size: 40px; }
+window.evertray.size-m label.name { font-size: 12px; }
+window.evertray.size-m flowboxchild.tile { padding: 12px 6px; }
+
+window.evertray.size-l .content { padding: 32px 40px; }
+window.evertray.size-l label.title { font-size: 20px; }
+window.evertray.size-l image.tray-icon { -gtk-icon-size: 56px; }
+window.evertray.size-l label.name { font-size: 14px; }
+window.evertray.size-l flowboxchild.tile { padding: 16px 8px; border-radius: 12px; }

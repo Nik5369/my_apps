@@ -1,0 +1,164 @@
+/* evernotify — используются только переменные системной палитры:
+   @bg, @bg-alt, @fg, @fg-alt, @accent, @red, @border
+   (их задаёт ~/.config/hypr/theme/current.css, подключается из evernotify.py). */
+
+window.evernotify {
+    background-color: @bg;
+    color: @fg;
+    font-family: "JetBrains Mono", "FiraCode Nerd Font Mono", monospace;
+    font-size: 13px;
+}
+
+/* окно всплывашек прозрачное — видны только карточки */
+window.evernotify-popups {
+    background: none;
+    font-family: "JetBrains Mono", "FiraCode Nerd Font Mono", monospace;
+    font-size: 13px;
+}
+
+.content {
+    padding: 14px 16px;
+}
+
+label.title {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+label.dim {
+    color: @fg-alt;
+}
+
+/* --- кнопки: сбрасываем оформление системной GTK-темы --- */
+
+button {
+    background: none;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    color: @fg-alt;
+    padding: 2px 6px;
+    min-height: 0;
+    min-width: 0;
+    border-radius: 6px;
+    transition: color 100ms, background-color 100ms;
+}
+
+button:hover {
+    color: @accent;
+    background-color: alpha(@fg, 0.06);
+}
+
+button.text-btn.accent {
+    color: @accent;
+}
+
+/* --- карточка уведомления --- */
+
+.card {
+    color: @fg;
+    padding: 12px 14px 10px;
+    border-radius: 10px;
+    background-color: alpha(@fg, 0.04);
+}
+
+window.evernotify-popups .card {
+    background-color: @bg;
+    border: 1px solid alpha(@border, 0.8);
+    min-width: 340px;
+    padding-bottom: 8px;
+}
+
+.card.urgency-2 {
+    box-shadow: inset 3px 0 @red;
+}
+
+image.note-image {
+    -gtk-icon-size: 36px;
+}
+
+label.app {
+    color: @fg-alt;
+    font-size: 11px;
+}
+
+label.time {
+    color: alpha(@fg-alt, 0.6);
+    font-size: 11px;
+}
+
+label.summary {
+    font-weight: bold;
+}
+
+label.body {
+    color: @fg-alt;
+}
+
+label.body link {
+    color: @accent;
+}
+
+button.close {
+    color: @fg-alt;
+    padding: 0 4px;
+    opacity: 0;
+}
+
+.card:hover button.close {
+    opacity: 1;
+}
+
+button.close:hover {
+    color: @red;
+    background: none;
+}
+
+.actions {
+    margin-top: 6px;
+}
+
+button.action {
+    background-color: alpha(@fg, 0.06);
+    color: @fg;
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+button.action:hover {
+    background-color: alpha(@accent, 0.16);
+    color: @fg;
+}
+
+/* --- таймер всплывашки: тонкая линия, как позиция трека в everplay --- */
+
+progressbar.position {
+    margin-top: 8px;
+}
+
+progressbar.position trough {
+    background-color: alpha(@fg, 0.08);
+    border: none;
+    min-height: 2px;
+    border-radius: 0;
+}
+
+progressbar.position progress {
+    background-color: @accent;
+    border: none;
+    min-height: 2px;
+    border-radius: 0;
+}
+
+/* --- адаптив окна истории: класс размера ставит evernotify.py --- */
+
+window.evernotify.size-m .content { padding: 20px 24px; }
+window.evernotify.size-m label.title { font-size: 16px; }
+window.evernotify.size-m image.note-image { -gtk-icon-size: 44px; }
+window.evernotify.size-m .card { padding: 14px 16px 12px; }
+
+window.evernotify.size-l .content { padding: 32px 40px; }
+window.evernotify.size-l label.title { font-size: 20px; }
+window.evernotify.size-l image.note-image { -gtk-icon-size: 56px; }
+window.evernotify.size-l label.summary { font-size: 15px; }
+window.evernotify.size-l .card { padding: 16px 20px 14px; }

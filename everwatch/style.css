@@ -1,0 +1,126 @@
+/* everwatch — используются только переменные системной палитры:
+   @bg, @fg, @fg-alt, @accent
+   (их задаёт ~/.config/hypr/theme/current.css, подключается из everwatch.py). */
+
+window.everwatch {
+    background-color: @bg;
+    color: @fg;
+    font-family: "JetBrains Mono", "FiraCode Nerd Font Mono", monospace;
+    font-size: 13px;
+}
+
+.content {
+    padding: 14px 16px 10px;
+}
+
+label.digits {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+label.hours.zero {
+    color: alpha(@fg-alt, 0.4);
+}
+
+label.icon {
+    font-family: "FiraCode Nerd Font Mono", monospace;
+    font-size: 28px;
+    color: @fg-alt;
+    margin-right: 10px;
+    transition: color 200ms;
+}
+
+window.everwatch.running label.icon {
+    color: @accent;
+}
+
+label.status {
+    color: @fg-alt;
+    font-size: 11px;
+    margin-top: 2px;
+}
+
+window.everwatch.paused label.digits {
+    color: alpha(@fg, 0.7);
+}
+
+/* --- кнопки: сбрасываем оформление системной GTK-темы --- */
+
+button {
+    background: none;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    color: @fg-alt;
+    padding: 0;
+    min-height: 0;
+    min-width: 0;
+    border-radius: 6px;
+    transition: color 100ms, background-color 100ms;
+}
+
+button:hover {
+    color: @accent;
+    background-color: alpha(@fg, 0.06);
+}
+
+button.ctl {
+    font-family: "FiraCode Nerd Font Mono", monospace;
+    font-size: 18px;
+    min-width: 30px;
+    min-height: 28px;
+}
+
+button.ctl.play {
+    color: @fg;
+    font-size: 22px;
+}
+
+button.ctl.play:hover {
+    color: @accent;
+}
+
+/* --- линия текущей минуты, как в everclock --- */
+
+progressbar.position {
+    margin-top: 8px;
+}
+
+progressbar.position trough {
+    background-color: alpha(@fg, 0.08);
+    border: none;
+    min-height: 2px;
+    border-radius: 0;
+}
+
+progressbar.position progress {
+    background-color: @accent;
+    border: none;
+    min-height: 2px;
+    border-radius: 0;
+}
+
+window.everwatch:not(.running) progressbar.position progress {
+    background-color: alpha(@fg-alt, 0.5);
+}
+
+/* --- адаптив: класс размера ставит everwatch.py по размеру окна --- */
+
+window.everwatch.size-m .content { padding: 20px 24px 14px; }
+window.everwatch.size-m label.digits { font-size: 72px; }
+window.everwatch.size-m label.icon { font-size: 48px; margin-right: 16px; }
+window.everwatch.size-m label.status { font-size: 14px; margin-top: 4px; }
+window.everwatch.size-m button.ctl { font-size: 24px; min-width: 40px; min-height: 36px; }
+window.everwatch.size-m button.ctl.play { font-size: 30px; }
+window.everwatch.size-m progressbar.position trough,
+window.everwatch.size-m progressbar.position progress { min-height: 3px; }
+
+window.everwatch.size-l .content { padding: 32px 40px 22px; }
+window.everwatch.size-l label.digits { font-size: 130px; }
+window.everwatch.size-l label.icon { font-size: 84px; margin-right: 24px; }
+window.everwatch.size-l label.status { font-size: 18px; margin-top: 6px; }
+window.everwatch.size-l button.ctl { font-size: 32px; min-width: 56px; min-height: 48px; }
+window.everwatch.size-l button.ctl.play { font-size: 42px; }
+window.everwatch.size-l progressbar.position { margin-top: 14px; }
+window.everwatch.size-l progressbar.position trough,
+window.everwatch.size-l progressbar.position progress { min-height: 4px; }

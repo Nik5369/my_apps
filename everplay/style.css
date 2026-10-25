@@ -1,0 +1,134 @@
+/* everplay — используются только переменные системной палитры:
+   @bg, @bg-alt, @fg, @fg-alt, @accent, @red, @border
+   (их задаёт ~/.config/hypr/theme/current.css, подключается из everplay.py). */
+
+window.everplay {
+    background-color: @bg;
+    color: @fg;
+    font-family: "JetBrains Mono", "FiraCode Nerd Font Mono", monospace;
+    font-size: 13px;
+}
+
+/* цвет столбиков визуализатора: читается в коде через get_color() */
+.viz {
+    color: alpha(@accent, 0.22);
+}
+
+.content {
+    padding: 14px 16px 10px;
+}
+
+label.track {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+label.artist {
+    color: @fg-alt;
+    margin-top: 2px;
+}
+
+window.everplay.idle label.track {
+    color: @fg-alt;
+    font-weight: normal;
+}
+
+label.source {
+    color: alpha(@fg-alt, 0.5);
+    font-size: 11px;
+}
+
+/* --- кнопки: сбрасываем оформление системной GTK-темы --- */
+
+button {
+    background: none;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    color: @fg-alt;
+    padding: 2px 6px;
+    min-height: 0;
+    min-width: 0;
+    border-radius: 6px;
+    transition: color 100ms, background-color 100ms;
+}
+
+button:hover {
+    color: @accent;
+    background-color: alpha(@fg, 0.06);
+}
+
+button.ctl {
+    font-family: "FiraCode Nerd Font Mono", monospace;
+    font-size: 18px;
+    min-width: 30px;
+    min-height: 28px;
+    padding: 0;
+}
+
+button.ctl.play {
+    color: @fg;
+    font-size: 22px;
+}
+
+button.ctl.play:hover {
+    color: @accent;
+}
+
+button.volume {
+    font-family: "JetBrains Mono", "FiraCode Nerd Font Mono", monospace;
+    font-size: 12px;
+}
+
+button.volume.muted {
+    color: @red;
+}
+
+/* --- позиция трека: тонкая линия внизу --- */
+
+progressbar.position {
+    margin-top: 8px;
+}
+
+progressbar.position trough {
+    background-color: alpha(@fg, 0.08);
+    border: none;
+    min-height: 2px;
+    border-radius: 0;
+}
+
+progressbar.position progress {
+    background-color: @accent;
+    border: none;
+    min-height: 2px;
+    border-radius: 0;
+}
+
+/* громкость выше 100% — предупреждение */
+button.volume.boost {
+    color: @yellow;
+}
+
+/* --- адаптив: класс размера ставит everplay.py по размеру окна --- */
+
+window.everplay.size-m .content { padding: 20px 24px 14px; }
+window.everplay.size-m label.track { font-size: 20px; }
+window.everplay.size-m label.artist { font-size: 15px; }
+window.everplay.size-m button.ctl { font-size: 24px; min-width: 40px; min-height: 36px; }
+window.everplay.size-m button.ctl.play { font-size: 30px; }
+window.everplay.size-m button.volume { font-size: 14px; }
+window.everplay.size-m label.source { font-size: 12px; }
+window.everplay.size-m progressbar.position trough,
+window.everplay.size-m progressbar.position progress { min-height: 3px; }
+
+window.everplay.size-l .content { padding: 32px 40px 22px; }
+window.everplay.size-l label.track { font-size: 30px; }
+window.everplay.size-l label.artist { font-size: 20px; margin-top: 6px; }
+window.everplay.size-l button.ctl { font-size: 32px; min-width: 56px; min-height: 48px; }
+window.everplay.size-l button.ctl.play { font-size: 42px; }
+window.everplay.size-l .controls { margin-bottom: 4px; }
+window.everplay.size-l button.volume { font-size: 16px; }
+window.everplay.size-l label.source { font-size: 14px; }
+window.everplay.size-l progressbar.position { margin-top: 14px; }
+window.everplay.size-l progressbar.position trough,
+window.everplay.size-l progressbar.position progress { min-height: 4px; }

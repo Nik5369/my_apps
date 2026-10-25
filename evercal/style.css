@@ -1,0 +1,343 @@
+/* evercal — используются только переменные системной палитры:
+   @bg, @bg-alt, @fg, @fg-alt, @accent, @red/green/yellow/blue/purple/cyan, @border
+   (их задаёт ~/.config/hypr/theme/current.css, подключается из evercal.py). */
+
+window.evercal {
+    background-color: @bg;
+    color: @fg;
+    font-family: "JetBrains Mono", "FiraCode Nerd Font Mono", monospace;
+    font-size: 13px;
+}
+
+.root {
+    padding: 14px;
+}
+
+label.dim, label.ev-meta {
+    color: @fg-alt;
+}
+
+label.title, button.title-btn {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* --- кнопки: сбрасываем оформление системной GTK-темы --- */
+
+button {
+    background: none;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    color: @fg;
+    padding: 2px 6px;
+    min-height: 0;
+    min-width: 0;
+    transition: background-color 100ms, color 100ms;
+}
+
+button:hover {
+    background-color: alpha(@fg, 0.07);
+}
+
+button.nav {
+    color: @fg-alt;
+    font-size: 16px;
+    min-width: 26px;
+    min-height: 24px;
+    padding: 0;
+}
+
+button.nav:hover, button.title-btn:hover {
+    color: @accent;
+    background: none;
+}
+
+button.title-btn {
+    padding: 2px 4px;
+}
+
+button.text-btn {
+    color: @fg-alt;
+}
+
+button.text-btn:hover {
+    color: @accent;
+    background: none;
+}
+
+button.text-btn.accent {
+    color: @accent;
+}
+
+/* --- сетка дней --- */
+
+label.weekday {
+    color: alpha(@fg-alt, 0.7);
+    font-size: 11px;
+}
+
+button.day, button.pick {
+    padding: 0;
+    min-width: 34px;
+    min-height: 30px;
+}
+
+button.day label.dot {
+    color: @accent;
+    font-size: 14px;
+    margin-top: -6px;
+    margin-bottom: -6px;
+}
+
+button.day label.dot.all-done {
+    color: alpha(@fg-alt, 0.5);
+}
+
+button.day.other-month label.num {
+    color: alpha(@fg-alt, 0.35);
+}
+
+button.day.today label.num, button.pick.today {
+    color: @accent;
+    font-weight: bold;
+}
+
+button.day.selected, button.pick.selected {
+    background-color: alpha(@accent, 0.16);
+}
+
+button.pick {
+    font-size: 14px;
+}
+
+/* --- полоса-сайдбар и панель событий --- */
+
+.rail {
+    margin: 0 10px;
+    padding: 0 0 0 10px;
+    border-left: 1px solid alpha(@border, 0.8);
+}
+
+.mini-dot {
+    min-width: 6px;
+    min-height: 6px;
+    margin: 3px 0;
+}
+
+.mini-dot.done {
+    opacity: 0.3;
+}
+
+list.events, list.events > row {
+    background: none;
+}
+
+list.events > row {
+    padding: 5px 4px;
+    color: @fg;
+}
+
+list.events > row:hover, list.events > row:selected {
+    background-color: alpha(@fg, 0.05);
+}
+
+label.ev-meta {
+    font-size: 11px;
+}
+
+row.event.done label.ev-title {
+    color: @fg-alt;
+    text-decoration-line: line-through;
+}
+
+row.event.done label.ev-meta {
+    color: alpha(@fg-alt, 0.5);
+}
+
+button.remove {
+    color: @fg-alt;
+    padding: 0 4px;
+    opacity: 0;
+}
+
+row:hover button.remove, row:selected button.remove {
+    opacity: 1;
+}
+
+button.remove:hover {
+    color: @red;
+    background: none;
+}
+
+/* чекбоксы: рамка — цвет события, заливка при отметке */
+checkbutton {
+    color: @fg;
+}
+
+checkbutton check {
+    background: none;
+    border: 1px solid @fg-alt;
+    box-shadow: none;
+    color: @bg;
+    min-width: 12px;
+    min-height: 12px;
+    margin-top: 2px;
+}
+
+checkbutton check:checked { background-color: @fg-alt; }
+
+checkbutton.ev-accent check { border-color: @accent; }
+checkbutton.ev-red check    { border-color: @red; }
+checkbutton.ev-green check  { border-color: @green; }
+checkbutton.ev-yellow check { border-color: @yellow; }
+checkbutton.ev-blue check   { border-color: @blue; }
+checkbutton.ev-purple check { border-color: @purple; }
+checkbutton.ev-cyan check   { border-color: @cyan; }
+checkbutton.ev-accent check:checked { background-color: @accent; }
+checkbutton.ev-red check:checked    { background-color: @red; }
+checkbutton.ev-green check:checked  { background-color: @green; }
+checkbutton.ev-yellow check:checked { background-color: @yellow; }
+checkbutton.ev-blue check:checked   { background-color: @blue; }
+checkbutton.ev-purple check:checked { background-color: @purple; }
+checkbutton.ev-cyan check:checked   { background-color: @cyan; }
+
+/* --- форма --- */
+
+entry, .note {
+    background-color: alpha(@fg, 0.05);
+    color: @fg;
+    caret-color: @accent;
+}
+
+.note textview, .note textview text {
+    background: none;
+    color: @fg;
+    caret-color: @accent;
+}
+
+entry {
+    border: none;
+    box-shadow: none;
+    outline: none;
+    padding: 2px 8px;
+    min-height: 28px;
+}
+
+entry:focus-within {
+    box-shadow: inset 0 -1px @accent;
+}
+
+entry:disabled {
+    color: alpha(@fg-alt, 0.4);
+}
+
+entry placeholder, entry text placeholder {
+    color: alpha(@fg-alt, 0.6);
+}
+
+button.swatch {
+    min-width: 14px;
+    min-height: 14px;
+    padding: 0;
+    opacity: 0.45;
+}
+
+button.swatch:checked {
+    opacity: 1;
+    box-shadow: 0 0 0 2px @bg, 0 0 0 3px @fg-alt;
+}
+
+label.error {
+    color: @red;
+    font-size: 11px;
+}
+
+/* цвета событий: точки в сайдбаре и образцы в форме */
+.c-accent { background-color: @accent; }
+.c-red    { background-color: @red; }
+.c-green  { background-color: @green; }
+.c-yellow { background-color: @yellow; }
+.c-blue   { background-color: @blue; }
+.c-purple { background-color: @purple; }
+.c-cyan   { background-color: @cyan; }
+
+/* --- стили углов: переключаются клавишей s --- */
+
+window.evercal.rounded button,
+window.evercal.rounded entry,
+window.evercal.rounded .note,
+window.evercal.rounded list.events > row { border-radius: 6px; }
+window.evercal.rounded checkbutton check { border-radius: 4px; }
+window.evercal.rounded button.swatch,
+window.evercal.rounded .mini-dot { border-radius: 99px; }
+
+window.evercal.sharp button,
+window.evercal.sharp entry,
+window.evercal.sharp .note,
+window.evercal.sharp list.events > row,
+window.evercal.sharp checkbutton check,
+window.evercal.sharp button.swatch,
+window.evercal.sharp .mini-dot { border-radius: 0; }
+window.evercal.sharp button.day.selected,
+window.evercal.sharp button.pick.selected { box-shadow: inset 0 0 0 1px @accent; }
+
+/* --- выбор времени --- */
+
+button.time-field {
+    background-color: alpha(@fg, 0.05);
+    padding: 4px 10px;
+    min-height: 20px;
+}
+
+button.time-field:hover {
+    color: @accent;
+}
+
+button.time-field.empty {
+    color: alpha(@fg-alt, 0.6);
+}
+
+button.time-field:disabled {
+    color: alpha(@fg-alt, 0.3);
+}
+
+popover.time-popover > contents {
+    background-color: @bg;
+    color: @fg;
+    border: 1px solid alpha(@border, 0.8);
+    box-shadow: 0 4px 16px alpha(black, 0.35);
+    padding: 8px;
+}
+
+button.tp {
+    min-width: 30px;
+    min-height: 24px;
+    padding: 0;
+    font-size: 12px;
+}
+
+button.tp.selected {
+    background-color: alpha(@accent, 0.16);
+    color: @accent;
+    font-weight: bold;
+}
+
+label.tp-caption {
+    color: alpha(@fg-alt, 0.7);
+    font-size: 10px;
+    margin-left: 4px;
+}
+
+separator.tp-sep {
+    background-color: alpha(@border, 0.6);
+    min-height: 1px;
+    margin: 8px 4px 4px;
+}
+
+window.evercal.rounded popover.time-popover > contents { border-radius: 10px; }
+window.evercal.rounded button.time-field,
+window.evercal.rounded button.tp { border-radius: 6px; }
+window.evercal.sharp popover.time-popover > contents,
+window.evercal.sharp button.time-field,
+window.evercal.sharp button.tp { border-radius: 0; }
